@@ -5,6 +5,11 @@
     <title>
       yasai - 設定
     </title>
+    <style>
+      body {
+      font-size: 2em;
+      }
+    </style>
   </head>
   <body>
     <a href="/">戻る</a>
@@ -13,13 +18,8 @@
     <form method="post" action="/setting">
       <div>
         <label>
-          <input type="radio" name="width" value="640" <% if @width == 640 %>checked<% end %> />
-          640
-        </label>
-        <br/>
-        <label>
-          <input type="radio" name="width" value="800" <% if @width == 800 %>checked<% end %> />
-          800
+          <input type="radio" name="width" value="1280" <% if @width == 1280 %>checked<% end %> />
+          1280
         </label>
         <br/>
         <label>

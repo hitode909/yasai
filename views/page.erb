@@ -5,10 +5,17 @@
     <title>
       yasai - <%=h @book.author %> - <%=h @book.title %> - <%=h @page %>
     </title>
+    <style>
+      body {
+      font-size: 2em;
+      }
+    </style>
   </head>
   <body>
     <div class="autopagerize_page_element">
-      <img src="/read/<%=h @book_id %>/image/<%=h @page %>.jpg" style="min-height: 100%"/>
+      <a href="/read/<%=h @book_id %>/page/<%=h @page + 1%>" rel="next">
+        <img src="/read/<%=h @book_id %>/image/<%=h @page %>.jpg" style="min-height: 100%"/>
+      </a>
     </div>
     <div class="autopagerize_insert_before"></div>
     <a href="/read/<%=h @book_id %>/page/<%=h @page + 1%>" rel="next">next</a>
