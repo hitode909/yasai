@@ -4,7 +4,11 @@ require 'digest/sha1'
 
 module Cache
   def self.instance
-    Dalli::Client.new('127.0.0.1:11211')
+    Dalli::Client.new(
+      ENV['MEMCACHE_SERVERS'],
+      :username => ENV['MEMCACHE_USERNAME'],
+      :password => ENV['MEMCACHE_PASSWORD'],
+      )
   end
 
   def self.get_or_set(key, expire = 3600 * 24 *rand)
