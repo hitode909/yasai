@@ -9,6 +9,10 @@ class GigaBook
     new_object
   end
 
+  def index_path
+    "/read/#{self.key}"
+  end
+
   def read_path
     "/read/#{self.key}/page/1"
   end

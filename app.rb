@@ -106,17 +106,48 @@ class ReaderApp < Sinatra::Base
     erb :page
   end
 
+  get '/setting' do
+    @width = request.cookies["width"].to_i
+    unless @width and @width > 0
+      @width = 1440
+    end
+    erb :setting
+  end
+
+  post '/setting' do
+    width = 1440
+    begin
+      width = params[:width].to_i
+    end
+
+    width = 1440 if width < 0
+
+    response.set_cookie("width", width)
+    @width = width
+
+    erb :setting
+  end
+
   get '/read/:book_id/image/:page_id.jpg' do
     @book = prepare_book(params[:book_id])
 
     set_trimming(@book)
 
-    if params[:width] or params[:height]
-      @book.trimming[:resize_w] = params[:width].to_i
-      @book.trimming[:resize_h] = params[:height].to_i
-    else
-      @book.trimming[:resize_h] = 960
-      @book.trimming[:resize_w] = (@book.trimming[:resize_h] * @book.trimming[:width] / @book.trimming[:height]).to_i
+    width = 1440
+
+    if request.cookies["width"] && request.cookies["width"].to_i
+      width = request.cookies["width"].to_i
+    end
+
+    width = 1440 if width < 0
+
+
+    @book.trimming[:resize_w] = width
+    @book.trimming[:resize_h] = (@book.trimming[:resize_w] * @book.trimming[:height] / @book.trimming[:width]).to_i
+
+    page_id = 1
+    begin
+      page_id = params[:page_id].to_i
     end
 
     redirect @book.spreads[params[:page_id].to_i].image_uri
