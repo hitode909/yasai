@@ -93,15 +93,11 @@ class ReaderApp < Sinatra::Base
     erb :index
   end
 
-  get '/read/:book_id' do
-    @book = prepare_book(params[:book_id])
-
-    erb :book
-  end
-
   get '/read/:book_id/page/:page_id' do
     @book_id = params[:book_id]
     @page = params[:page_id].to_i
+
+    @book = prepare_book(params[:book_id])
 
     erb :page
   end
