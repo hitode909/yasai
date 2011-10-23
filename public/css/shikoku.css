@@ -1,0 +1,49 @@
+body {
+    margin: 10px;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* #color-sample { */
+/*     height: 30px; */
+/* } */
+
+#color-sample span {
+    display: inline-block;
+    width: 1px;
+    height: 30px;
+}
+
+.tokens {
+    min-height: 8em;
+    padding: 1em;
+}
+
+.token:hover {
+    background: #ffc;
+    cursor: pointer;
+}
+
+#completions-container {
+    display: none;
+    position: absolute;
+    border: 1px solid gray;
+    background: white;
+    padding: 1em;
+}
+
+#completions-container .token {
+    display: inline-block;
+    cursor: pointer;
+}
+
+#fill-factor {
+    width: 500px;
+}
+
+textarea#source-code {
+    width: 500px;
+    height: 400px;
+}

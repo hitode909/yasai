@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>reader</title>
+  </head>
+  <body>
+    <h1>
+      <%=h @book.author %> - <%=h @book.title %>
+    </h1>
+    <div>
+      <img src="/read/<%=h @book.key %>/page/11.jpg"/>
+    </div>
+  </body>
+</html>
