@@ -10,6 +10,10 @@ class GigaBook
   end
 
   def read_path
-    "/read/#{self.key}"
+    "/read/#{self.key}/page/1"
+  end
+
+  def original_permalink
+    "http://kindai.ndl.go.jp/info:ndljp/pid/#{self.key}"
   end
 end

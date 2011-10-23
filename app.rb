@@ -5,15 +5,25 @@ require 'json'
 require 'cache'
 require 'gigabook'
 
-# module Kindai::Util
-#   def self.fetch_uri(uri, rich = false)
-#     warn 'overrided fetch_uri'
-#     Cache.get_or_set("uri:#{uri}", 3600) {
-#       open(uri).read
-#     }
-#   end
+module Kindai::Util
+  class << self
+    alias_method :fetch_uri_without_cache, :fetch_uri
+    def fetch_uri(uri, rich = false)
+      warn "overrided fetch_uri #{uri}"
+      Cache.get_or_set("uri:#{uri}", 3600) {
+        self.fetch_uri_without_cache(uri, rich)
+      }
+    end
 
-# end
+    alias_method :get_redirected_uri_without_cache, :get_redirected_uri
+    def get_redirected_uri(uri)
+      warn "overrided get_redirected_uri #{uri}"
+      Cache.get_or_set("redirected_uri:#{uri}", 3600) {
+        self.get_redirected_uri_without_cache(uri)
+      }
+    end
+  end
+end
 
 class ReaderApp < Sinatra::Base
 
@@ -29,16 +39,26 @@ class ReaderApp < Sinatra::Base
     end
 
     def cached_content(uri)
+      warn "cached_content #{uri}"
       Cache.get_or_set("uri:#{uri}", 3600) {
         open(uri).read
       }
     end
 
     def get_books
-      uri = 'http://gigaschema.appspot.com/hitode909/kindai.json'
-      JSON.parse(cached_content(uri))['data'].map{ |data|
-        GigaBook.new_from_data(data)
+      books = []
+      (1..10).each{ |page|
+        uri = "http://gigaschema.appspot.com/hitode909/kindai.json?page=#{page}"
+        res = JSON.parse(cached_content(uri))
+        res['data'].each{ |data|
+          begin
+            books << GigaBook.new_from_data(data)
+          rescue JSON::ParserError
+          end
+        }
+        break unless res['has_next']
       }
+      books
     end
 
     def prepare_book(book_id)
@@ -89,14 +109,14 @@ class ReaderApp < Sinatra::Base
   get '/read/:book_id/image/:page_id.jpg' do
     @book = prepare_book(params[:book_id])
 
-    # set_trimming(@book)
+    set_trimming(@book)
 
     if params[:width] or params[:height]
       @book.trimming[:resize_w] = params[:width].to_i
       @book.trimming[:resize_h] = params[:height].to_i
     else
-      @book.trimming[:resize_w] = 1440
       @book.trimming[:resize_h] = 960
+      @book.trimming[:resize_w] = (@book.trimming[:resize_h] * @book.trimming[:width] / @book.trimming[:height]).to_i
     end
 
     redirect @book.spreads[params[:page_id].to_i].image_uri

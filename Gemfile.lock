@@ -3,7 +3,7 @@ GEM
   specs:
     dalli (1.1.2)
     json (1.6.1)
-    kindai (1.7.0)
+    kindai (1.7.2)
       json (>= 1.4)
       nokogiri
       rmagick
@@ -25,5 +25,5 @@ PLATFORMS
 
 DEPENDENCIES
   dalli
-  kindai
+  kindai (>= 1.7.2)
   sinatra
