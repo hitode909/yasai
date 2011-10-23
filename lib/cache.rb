@@ -11,7 +11,7 @@ module Cache
       )
   end
 
-  def self.get_or_set(key, expire = 3600 * 24 *rand)
+  def self.get_or_set(key, expire = 3600 * 24)
     raise "block needed" unless block_given?
     key = Digest::SHA1.hexdigest(key.to_s)
     cache = self.instance.get(key)
