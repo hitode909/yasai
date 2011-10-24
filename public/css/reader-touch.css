@@ -11,5 +11,7 @@
     cursor: pointer;
 }
 #caches {
-    display: none;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
 }
