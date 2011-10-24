@@ -10,3 +10,6 @@
     top: 0px;
     cursor: pointer;
 }
+#caches {
+    display: none;
+}
