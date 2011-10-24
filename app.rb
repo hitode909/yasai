@@ -75,10 +75,10 @@ class ReaderApp < Sinatra::Base
       end
 
       trimming_hash = {
-        :x      => trimming.x.to_i,
-        :y      => trimming.instance_variable_get(:@table)[:y].to_i, # XXX: ?????????
-        :w  => trimming.width.to_i,
-        :h => trimming.height.to_i,
+        :x      => trimming[:x].to_i,
+        :y      => trimming[:y].to_i,
+        :w      => trimming[:width].to_i,
+        :h      => trimming[:height].to_i,
       }
 
       book.trimming = trimming_hash
