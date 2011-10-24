@@ -110,6 +110,10 @@ class ReaderApp < Sinatra::Base
     erb :setting
   end
 
+  get '/read.touch' do
+    erb :read_touch
+  end
+
   post '/setting' do
     width = 1440
     begin
@@ -153,10 +157,10 @@ class ReaderApp < Sinatra::Base
 
     set_trimming(@book)
 
-    @book.trimming[:w] = (@book.trimming[:h] * 600 / 800).to_i
+    @book.trimming[:w] = (@book.trimming[:h] * 640 / 960).to_i
 
-    @book.trimming[:resize_w] = 600
-    @book.trimming[:resize_h] = 800
+    @book.trimming[:resize_w] = 640
+    @book.trimming[:resize_h] = 960
 
     page_id = 1
     begin
@@ -171,11 +175,11 @@ class ReaderApp < Sinatra::Base
 
     set_trimming(@book)
 
-    @book.trimming[:x] = (@book.trimming[:x] + @book.trimming[:w] - @book.trimming[:h] * 600 / 800).to_i
-    @book.trimming[:w] = (@book.trimming[:h] * 600 / 800).to_i
+    @book.trimming[:x] = (@book.trimming[:x] + @book.trimming[:w] - @book.trimming[:h] * 640 / 960).to_i
+    @book.trimming[:w] = (@book.trimming[:h] * 640 / 960).to_i
 
-    @book.trimming[:resize_w] = 600
-    @book.trimming[:resize_h] = 800
+    @book.trimming[:resize_w] = 640
+    @book.trimming[:resize_h] = 960
 
     page_id = 1
     begin
