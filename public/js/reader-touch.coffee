@@ -28,18 +28,10 @@ $ ->
     create_cache_image(next_path)
 
   next_page = ->
-    $('#stage img').animate
-      left: 680
-    , 500, ->
-      $(this).remove()
+    $('#stage img').remove()
 
     image = caches.shift()
-    image.css
-      left: -680
-    .appendTo('#stage')
-    .animate
-      left: 0
-    , 500
+    image.appendTo('#stage')
 
     image.click ->
       next_page()

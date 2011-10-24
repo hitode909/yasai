@@ -33,17 +33,9 @@ $(function() {
   };
   next_page = function() {
     var image;
-    $('#stage img').animate({
-      left: 680
-    }, 500, function() {
-      return $(this).remove();
-    });
+    $('#stage img').remove();
     image = caches.shift();
-    image.css({
-      left: -680
-    }).appendTo('#stage').animate({
-      left: 0
-    }, 500);
+    image.appendTo('#stage');
     image.click(function() {
       return next_page();
     });
