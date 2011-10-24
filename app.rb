@@ -76,9 +76,9 @@ class ReaderApp < Sinatra::Base
 
       trimming_hash = {
         :x      => trimming.x.to_i,
-        :y      => trimming.y.to_i,
-        :width  => trimming.width.to_i,
-        :height => trimming.height.to_i,
+        :y      => trimming.instance_variable_get(:@table)[:y].to_i, # XXX: ?????????
+        :w  => trimming.width.to_i,
+        :h => trimming.height.to_i,
       }
 
       book.trimming = trimming_hash
@@ -137,9 +137,45 @@ class ReaderApp < Sinatra::Base
 
     width = 1440 if width < 0
 
-
     @book.trimming[:resize_w] = width
-    @book.trimming[:resize_h] = (@book.trimming[:resize_w] * @book.trimming[:height] / @book.trimming[:width]).to_i
+    @book.trimming[:resize_h] = (@book.trimming[:resize_w] * @book.trimming[:h] / @book.trimming[:w]).to_i
+
+    page_id = 1
+    begin
+      page_id = params[:page_id].to_i
+    end
+
+    redirect @book.spreads[params[:page_id].to_i].image_uri
+  end
+
+  get '/read/:book_id/image/l/:page_id.jpg' do
+    @book = prepare_book(params[:book_id])
+
+    set_trimming(@book)
+
+    @book.trimming[:w] = (@book.trimming[:h] * 600 / 800).to_i
+
+    @book.trimming[:resize_w] = 600
+    @book.trimming[:resize_h] = 800
+
+    page_id = 1
+    begin
+      page_id = params[:page_id].to_i
+    end
+
+    redirect @book.spreads[params[:page_id].to_i].image_uri
+  end
+
+  get '/read/:book_id/image/r/:page_id.jpg' do
+    @book = prepare_book(params[:book_id])
+
+    set_trimming(@book)
+
+    @book.trimming[:x] = (@book.trimming[:x] + @book.trimming[:w] - @book.trimming[:h] * 600 / 800).to_i
+    @book.trimming[:w] = (@book.trimming[:h] * 600 / 800).to_i
+
+    @book.trimming[:resize_w] = 600
+    @book.trimming[:resize_h] = 800
 
     page_id = 1
     begin
