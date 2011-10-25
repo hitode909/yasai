@@ -22,7 +22,7 @@ $(function() {
     var book_id, last_cache, match, next_page_num, next_path, next_rl, page_num, path, rl, _;
     last_cache = caches[caches.length - 1];
     path = last_cache.attr('data-path');
-    match = path.match(/^\/read\/(\d+)\/image\/(\w)\/(\d+)\.jpg$/);
+    match = path.match(/^\/read\/(\d+)\/image\/(\w)\/(\d+)\.jpg/);
     _ = match[0], book_id = match[1], rl = match[2], page_num = match[3];
     if (rl === "r") {
       next_rl = "l";
@@ -42,7 +42,7 @@ $(function() {
     image.click(function() {
       return next_page();
     });
-    if (caches.length < 3) {
+    if (caches.length < 4) {
       return prepare_next_cache();
     }
   };

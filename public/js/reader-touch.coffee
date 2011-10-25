@@ -18,7 +18,7 @@ $ ->
   prepare_next_cache = ->
     last_cache = caches[caches.length - 1]
     path = last_cache.attr('data-path')
-    match = path.match /^\/read\/(\d+)\/image\/(\w)\/(\d+)\.jpg$/
+    match = path.match /^\/read\/(\d+)\/image\/(\w)\/(\d+)\.jpg/
     [_, book_id, rl, page_num] = match
     if rl == "r"
       next_rl = "l"
