@@ -133,16 +133,23 @@ class ReaderApp < Sinatra::Base
 
     set_trimming(@book)
 
-    width = 1440
+    resize_width = 1440
+    resize_height = nil
 
-    if request.cookies["width"] && request.cookies["width"].to_i
-      width = request.cookies["width"].to_i
+    if params[:width]
+      resize_width = params[:width].to_i
+    elsif request.cookies["width"]
+      resize_width = request.cookies["width"].to_i
     end
 
-    width = 1440 if width < 0
+    if params[:width] and params[:height]
+      resize_height = params[:height].to_i
+    end
 
-    @book.trimming[:resize_w] = width
-    @book.trimming[:resize_h] = (@book.trimming[:resize_w] * @book.trimming[:h] / @book.trimming[:w]).to_i
+    resize_width = 1440 if resize_width < 0
+
+    @book.trimming[:resize_w] = resize_width
+    @book.trimming[:resize_h] = resize_height || (@book.trimming[:resize_w] * @book.trimming[:h] / @book.trimming[:w]).to_i
 
     page_id = 1
     begin
