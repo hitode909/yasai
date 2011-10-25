@@ -2,7 +2,13 @@ $(function() {
   var caches, create_cache_image, next_page, prepare_first_cache, prepare_next_cache, size_params, _i;
   caches = [];
   size_params = function() {
-    return "?width=" + window.innerWidth + "&height=" + window.innerHeight;
+    var height, width, _ref;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    if (width > height) {
+      _ref = [height, width], width = _ref[0], height = _ref[1];
+    }
+    return "?width=" + width + "&height=" + height;
   };
   create_cache_image = function(path) {
     var img;
