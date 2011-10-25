@@ -1,6 +1,9 @@
 $ ->
   caches = []
 
+  size_params = ->
+    "?width=#{window.innerWidth}&height=#{window.innerHeight}"
+
   create_cache_image = (path) ->
     img = $('<img>').attr
       src: path
@@ -10,7 +13,7 @@ $ ->
 
   prepare_first_cache = ->
     book_id = $('body').attr('data-book-id')
-    create_cache_image("/read/#{book_id}/image/r/1.jpg")
+    create_cache_image("/read/#{book_id}/image/r/1.jpg" + size_params())
 
   prepare_next_cache = ->
     last_cache = caches[caches.length - 1]
@@ -24,7 +27,7 @@ $ ->
       next_rl = "r"
       next_page_num = +page_num + 1
 
-    next_path = "/read/#{book_id}/image/#{next_rl}/#{next_page_num}.jpg"
+    next_path = "/read/#{book_id}/image/#{next_rl}/#{next_page_num}.jpg" + size_params()
     create_cache_image(next_path)
 
   next_page = ->
@@ -36,7 +39,7 @@ $ ->
     image.click ->
       next_page()
 
-    if caches.length < 3
+    if caches.length < 4
       prepare_next_cache()
 
   # -----

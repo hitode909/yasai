@@ -1,6 +1,9 @@
 $(function() {
-  var caches, create_cache_image, next_page, prepare_first_cache, prepare_next_cache, _i;
+  var caches, create_cache_image, next_page, prepare_first_cache, prepare_next_cache, size_params, _i;
   caches = [];
+  size_params = function() {
+    return "?width=" + window.innerWidth + "&height=" + window.innerHeight;
+  };
   create_cache_image = function(path) {
     var img;
     img = $('<img>').attr({
@@ -13,7 +16,7 @@ $(function() {
   prepare_first_cache = function() {
     var book_id;
     book_id = $('body').attr('data-book-id');
-    return create_cache_image("/read/" + book_id + "/image/r/1.jpg");
+    return create_cache_image(("/read/" + book_id + "/image/r/1.jpg") + size_params());
   };
   prepare_next_cache = function() {
     var book_id, last_cache, match, next_page_num, next_path, next_rl, page_num, path, rl, _;
@@ -28,7 +31,7 @@ $(function() {
       next_rl = "r";
       next_page_num = +page_num + 1;
     }
-    next_path = "/read/" + book_id + "/image/" + next_rl + "/" + next_page_num + ".jpg";
+    next_path = ("/read/" + book_id + "/image/" + next_rl + "/" + next_page_num + ".jpg") + size_params();
     return create_cache_image(next_path);
   };
   next_page = function() {

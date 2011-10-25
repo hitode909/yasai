@@ -157,10 +157,13 @@ class ReaderApp < Sinatra::Base
 
     set_trimming(@book)
 
-    @book.trimming[:w] = (@book.trimming[:h] * 640 / 960).to_i
+    resize_width = params[:width] ? params[:width].to_i : 640
+    resize_height = params[:height] ? params[:height].to_i : 960
 
-    @book.trimming[:resize_w] = 640
-    @book.trimming[:resize_h] = 960
+    @book.trimming[:w] = (@book.trimming[:h] * resize_width / resize_height).to_i
+
+    @book.trimming[:resize_w] = resize_width
+    @book.trimming[:resize_h] = resize_height
 
     page_id = 1
     begin
@@ -175,11 +178,14 @@ class ReaderApp < Sinatra::Base
 
     set_trimming(@book)
 
-    @book.trimming[:x] = (@book.trimming[:x] + @book.trimming[:w] - @book.trimming[:h] * 640 / 960).to_i
-    @book.trimming[:w] = (@book.trimming[:h] * 640 / 960).to_i
+    resize_width = params[:width] ? params[:width].to_i : 640
+    resize_height = params[:height] ? params[:height].to_i : 960
 
-    @book.trimming[:resize_w] = 640
-    @book.trimming[:resize_h] = 960
+    @book.trimming[:resize_w] = resize_width
+    @book.trimming[:resize_h] = resize_height
+
+    @book.trimming[:x] = (@book.trimming[:x] + @book.trimming[:w] - @book.trimming[:h] * resize_width / resize_height).to_i
+    @book.trimming[:w] = (@book.trimming[:h] * resize_width / resize_height).to_i
 
     page_id = 1
     begin
