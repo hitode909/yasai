@@ -2,11 +2,7 @@ $ ->
   caches = []
 
   size_params = ->
-    width = window.innerWidth
-    height = window.innerHeight
-    if width > height
-      [width, height] = [height, width]
-    "?width=#{width}&height=#{height}"
+    "?width=#{window.innerWidth}&height=#{window.innerHeight}"
 
   create_cache_image = (path) ->
     img = $('<img>').attr
