@@ -9,11 +9,38 @@
     <link rel="canonical" href="http://yasai.heroku.com/read/<%=h @book_id %>/page/1" />
     <% end %>
   </head>
-  <body>
+  <body data-book-id="<%=h @book_id %>" data-page-id="<%=h @page %>">
     <div class="autopagerize_page_element">
-      <img src="/read/<%=h @book_id %>/image/<%=h @page %>.jpg" style="min-height: 700px; width: 100%;"/>
+      <img src="/read/<%=h @book_id %>/image/<%=h @page %>.jpg" style="min-height: 700px; width: 100%;" onclick="showMenu(<%=h @page %>)" />
+
+      <div class="menu" data-page-id="<%=h @page %>" style="display: none">
+        <a href="/">yasaiトップ</a>
+        /
+        <a href="/read/<%=h @book_id %>/page/1">この本の最初のページ</a>
+        /
+        <a href="/read/<%=h @book_id %>/page/<%=h @page %>">この本のこのページ</a>
+        /
+        <a target="_blank" href="<%=h @book.permalink_uri %>">近代デジタルライブラリーのこの本</a>
+        /
+        <a target="_blank" href="<%=h @book.permalink_uri %>/<%= @page %>">近代デジタルライブラリーのこのページ</a>
+      </div>
+
     </div>
     <div class="autopagerize_insert_before"></div>
     <a href="/read/<%=h @book_id %>/page/<%=h @page + 1%>" rel="next">next</a>
+    <script>
+      (function() {
+        if (window.showMenu) return;
+
+        window.showMenu = function(page) {
+          var menu = document.querySelector("div.menu[data-page-id='" + page + "']");
+          if (!menu) {
+            return;
+          }
+          menu.style.display='block';
+        }
+      })();
+    </script>
+
   </body>
 </html>
