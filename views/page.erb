@@ -5,6 +5,9 @@
     <title>
       yasai - <%=h @book.author %> - <%=h @book.title %> - <%=h @page %>
     </title>
+    <% if @page != 1 %>
+    <link rel="canonical" href="http://yasai.heroku.com/read/<%=h @book_id %>/page/1" />
+    <% end %>
   </head>
   <body>
     <div class="autopagerize_page_element">
