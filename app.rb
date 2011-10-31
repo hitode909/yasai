@@ -156,7 +156,11 @@ class ReaderApp < Sinatra::Base
       page_id = params[:page_id].to_i
     end
 
-    redirect @book.spreads[params[:page_id].to_i].image_uri
+    if page_id < 1
+      page_id = 1
+    end
+
+    redirect @book.spreads[page_id - 1].image_uri
   end
 
   get '/read/:book_id/image/l/:page_id.jpg' do
@@ -177,7 +181,11 @@ class ReaderApp < Sinatra::Base
       page_id = params[:page_id].to_i
     end
 
-    redirect @book.spreads[params[:page_id].to_i].image_uri
+    if page_id < 1
+      page_id = 1
+    end
+
+    redirect @book.spreads[pag_id - 1].image_uri
   end
 
   get '/read/:book_id/image/r/:page_id.jpg' do
@@ -199,7 +207,11 @@ class ReaderApp < Sinatra::Base
       page_id = params[:page_id].to_i
     end
 
-    redirect @book.spreads[params[:page_id].to_i].image_uri
+    if page_id < 1
+      page_id = 1
+    end
+
+    redirect @book.spreads[pag_id - 1].image_uri
   end
 
 
